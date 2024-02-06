@@ -1,0 +1,14 @@
+{
+	"recommendations": [
+		"biomejs.biome",
+		"eamodio.gitlens",
+		"pflannery.vscode-versionlens",
+		"usernamehw.errorlens",
+		"oderwat.indent-rainbow",
+		"ms-vscode.vscode-typescript-next",
+		"pmneo.tsimporter",
+		"yoavbls.pretty-ts-errors",
+		"timonwong.shellcheck",
+		"donjayamanne.githistory"
+	]
+}
