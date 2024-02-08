@@ -47,10 +47,6 @@ app.onError((err, c) => {
 		console.error(err);
 		return err.getResponse();
 	}
-	if (err instanceof Error) {
-		console.error(err);
-		return c.text(GLOBAL_MESSAGE.ERROR, 500);
-	}
 	console.error(err);
 	return c.text(GLOBAL_MESSAGE.ERROR, 500);
 });
