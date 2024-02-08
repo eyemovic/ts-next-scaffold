@@ -4,7 +4,8 @@ import { $users } from "../../db/schema";
 import { User } from "../../db/types";
 
 /**
- * ユーザーリポジトリ
+ * UserRepository
+ * @description ユーザー情報に関するリポジトリ
  */
 export const UserRepository = {
 	/**
