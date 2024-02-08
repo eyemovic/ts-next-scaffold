@@ -1,52 +1,86 @@
-import { tbValidator } from "@hono/typebox-validator";
-import { Hono } from "hono";
-import { User } from "../drizzle/schema";
-import { createUser, findUserById, findUsers } from "./users/repository";
-import { UserSchema } from "./users/schema/schema";
+import { Context, Hono } from "hono";
+import { basicAuth } from "hono/basic-auth";
+import { HTTPException } from "hono/http-exception";
+import { jwt } from "hono/jwt";
+import { logger } from "hono/logger";
+import { prettyJSON } from "hono/pretty-json";
+import { secureHeaders } from "hono/secure-headers";
+import { MESSAGE } from "./constant";
 
 const app = new Hono();
+
 /**
- * Get
+ * Middleware
+ * {@link https://hono.dev/middleware/builtin/logger}
+ * {@link https://hono.dev/middleware/builtin/pretty-json}
+ */
+app.use("*", logger()); // ログ出力
+app.use("*", prettyJSON()); // JSON文字列の整形
+
+/**
+ * Security
+ * {@link https://hono.dev/middleware/builtin/secure-headers}
+ */
+app.use("*", secureHeaders());
+
+/**
+ * Authentication
+ * {@link https://hono.dev/middleware/builtin/basic-auth}
+ * {@link https://hono.dev/middleware/builtin/jwt}
  */
 app
-	.get("/", (c) => {
-		return c.text("Hello Hono!");
-	})
-	.get("/user/:id", (c) => {
-		const id = c.req.param("id");
-		return c.json(findUserById(parseInt(id)));
-	})
-	.get("/users", (c) => {
-		return c.json(findUsers());
+	.use(
+		"/jwt/*",
+		jwt({
+			secret: "it-is-very-secret",
+		}),
+	)
+	.get("/jwt/page", (c) => {
+		return c.text("You are authorized");
 	});
+app
+	.use(
+		"/basic/*",
+		basicAuth({
+			username: "hono",
+			password: "acoolproject",
+		}),
+	)
+	.get("/basic/page", (c) => {
+		return c.text("You are authorized");
+	});
+
 /**
- * Post
+ * Routing
+ * {@link https://hono.dev/api/routing}
  */
-app.post(
-	"/user",
-	tbValidator("json", UserSchema, (result, c) => {
-		if (!result.success) {
-			return c.text("Invalid user", 400);
-		}
-		createUser(result.data satisfies User);
-		return c.text("User created");
-	}),
-);
+app.get("/", (c: Context) => {
+	return c.text("Hello Hono!");
+});
+
 /**
  * Not Found
+ * {@link https://hono.dev/api/hono#not-found}
  */
 app.notFound((c) => {
 	return c.text("Custom 404 Not Found", 404);
 });
+
 /**
  * Error Handling
+ * {@link https://hono.dev/api/hono#error-handling}
  */
 app.onError((err, c) => {
-	console.error(`${err}`);
-	return c.text("Custom Error Message", 500);
+	if (err instanceof HTTPException) {
+		console.error(err);
+		return err.getResponse();
+	}
+	if (err instanceof Error) {
+		console.error(err);
+		return c.text(MESSAGE.ERROR, 500);
+	}
+	console.error(err);
+	return c.text(MESSAGE.ERROR, 500);
 });
 
-export default {
-	port: 3000,
-	fetch: app.fetch,
-};
+export default app;
