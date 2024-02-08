@@ -4,7 +4,7 @@ import { HTTPException } from "hono/http-exception";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import { secureHeaders } from "hono/secure-headers";
-import { GLOBAL_MESSAGE } from "./constant";
+import { GLOBAL_MESSAGE } from "../constant";
 
 /**
  * Root
