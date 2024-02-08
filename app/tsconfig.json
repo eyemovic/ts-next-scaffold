@@ -3,5 +3,6 @@
     "@tsconfig/bun/tsconfig.json",
     "@tsconfig/strictest/tsconfig.json"
   ],
+  "lib": ["web", "bun-types"],
   "compilerOptions": {}
 }
