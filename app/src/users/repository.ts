@@ -6,7 +6,7 @@ import { User } from "../drizzle/schema";
 export const findUserById = async (id: number): Promise<User | undefined> => {
 	return await db.select().from($users).where(eq($users.id, id)).limit(1).get();
 };
-export const findUsers = async (): Promise<User[]> => {
+export const findUsers = async (): Promise<Array<User>> => {
 	return await db.select().from($users);
 };
 

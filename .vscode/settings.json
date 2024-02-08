@@ -13,12 +13,9 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "editor.codeActionsOnSave": {
-    "quickfix.biome": "explicit",
-    "source.organizeImports.biome": "explicit"
+    "quickfix.biome": true,
+    "source.organizeImports.biome": true
   },
   "typescript.referencesCodeLens.enabled": true,
   "errorLens.onSave": true
