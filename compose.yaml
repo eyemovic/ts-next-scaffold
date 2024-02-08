@@ -1,0 +1,12 @@
+services:
+  myapp:
+    image: oven/bun:latest
+    working_dir: /usr/src/app
+    command: sh -c "bun install && bun run dev"
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./src/myapp:/usr/src/app
+    environment:
+      - BUN_ENV=development
+      - BUN_PORT=3001
