@@ -24,11 +24,16 @@ app
 /**
  * Post
  */
-app.post("/user", tbValidator("json", UserSchema), (c) => {
-	const user = c.req.valid("json") satisfies User;
-	createUser(user);
-	return c.text("User created");
-});
+app.post(
+	"/user",
+	tbValidator("json", UserSchema, (result, c) => {
+		if (!result.success) {
+			return c.text("Invalid user", 400);
+		}
+		createUser(result.data satisfies User);
+		return c.text("User created");
+	}),
+);
 
 // Not Found
 app.notFound((c) => {
