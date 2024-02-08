@@ -15,10 +15,8 @@ import { userSchema } from "./schema/schema";
  */
 const UserController = {
 	getUserById: async (c: Context): JsonResponse<User | undefined> => {
-		const id = c.req.param("id");
-		const user = await UserRepository.findUserById(parseInt(id));
-		const result = c.json(user);
-		return result;
+		const id = parseInt(c.req.param("id"));
+		return c.json(await UserRepository.findUserById(id));
 	},
 	getUsers: async (c: Context): JsonResponse<Array<User>> => {
 		return c.json(await UserRepository.findUsers());

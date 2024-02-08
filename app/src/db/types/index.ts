@@ -1,5 +1,13 @@
 import { InferSelectModel } from "drizzle-orm";
-import { $users } from "../schema";
+import { $offices, $users } from "../schema";
+
+/**
+ * Office
+ * @property id - ID
+ * @property name - オフィス名
+ * @property createdAt - 作成日時
+ */
+export type Office = InferSelectModel<typeof $offices>;
 
 /**
  * User
