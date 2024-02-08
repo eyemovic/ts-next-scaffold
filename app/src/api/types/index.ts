@@ -3,4 +3,4 @@ import { TypedResponse } from "hono";
 /**
  * コントローラーのレスポンス型
  */
-export type R<T> = Promise<Response & TypedResponse<T>>;
+export type JsonResponse<T> = Promise<Response & TypedResponse<T>>;

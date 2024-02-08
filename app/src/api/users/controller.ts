@@ -5,36 +5,36 @@ import { HTTPException } from "hono/http-exception";
 import app from "..";
 import { User } from "../../db/types";
 import { GLOBAL_MESSAGE, USER_MESSAGE } from "../constant";
-import { R } from "../types";
+import { JsonResponse } from "../types";
 import { UserRepository } from "./repository";
-import { UserSchema } from "./schema/schema";
+import { userSchema } from "./schema/schema";
 
 /**
  * UserController
  * @description ユーザー情報に関するコントローラー
  */
 const UserController = {
-	getUserById: async (c: Context): R<User | undefined> => {
+	getUserById: async (c: Context): JsonResponse<User | undefined> => {
 		const id = c.req.param("id");
 		const user = await UserRepository.findUserById(parseInt(id));
 		const result = c.json(user);
 		return result;
 	},
-	getUsers: async (c: Context): R<Array<User>> => {
+	getUsers: async (c: Context): JsonResponse<Array<User>> => {
 		return c.json(await UserRepository.findUsers());
 	},
-	postUser: tbValidator("json", UserSchema, (result, c): Response => {
+	postUser: tbValidator("json", userSchema, (result, c: Context): Response => {
 		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		UserRepository.createUser(result.data satisfies User);
+		UserRepository.createUser(result.data);
 		return c.text(USER_MESSAGE.USER_CREATED);
 	}),
-	postUsers: tbValidator("json", T.Array(UserSchema), (result, c): Response => {
+	postUsers: tbValidator("json", T.Array(userSchema), (result, c: Context): Response => {
 		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		UserRepository.createUsers(result.data satisfies Array<User>);
+		UserRepository.createUsers(result.data);
 		return c.text(USER_MESSAGE.USER_CREATED);
 	}),
 } as const;
