@@ -1,5 +1,6 @@
 import { Context, Hono } from "hono";
 import { basicAuth } from "hono/basic-auth";
+import { showRoutes } from "hono/dev";
 import { HTTPException } from "hono/http-exception";
 import { jwt } from "hono/jwt";
 import { logger } from "hono/logger";
@@ -22,33 +23,6 @@ app.use("*", prettyJSON()); // JSON文字列の整形
  * {@link https://hono.dev/middleware/builtin/secure-headers}
  */
 app.use("*", secureHeaders());
-
-/**
- * Authentication
- * {@link https://hono.dev/middleware/builtin/basic-auth}
- * {@link https://hono.dev/middleware/builtin/jwt}
- */
-app
-	.use(
-		"/jwt/*",
-		jwt({
-			secret: "it-is-very-secret",
-		}),
-	)
-	.get("/jwt/page", (c) => {
-		return c.text(GLOBAL_MESSAGE.AUTHORIZED);
-	});
-app
-	.use(
-		"/basic/*",
-		basicAuth({
-			username: "hono",
-			password: "acoolproject",
-		}),
-	)
-	.get("/basic/page", (c) => {
-		return c.text(GLOBAL_MESSAGE.AUTHORIZED);
-	});
 
 /**
  * Routing
@@ -84,3 +58,4 @@ app.onError((err, c) => {
 });
 
 export default app;
+showRoutes(app);
