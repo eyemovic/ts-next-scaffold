@@ -5,7 +5,7 @@ import { jwt } from "hono/jwt";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import { secureHeaders } from "hono/secure-headers";
-import { MESSAGE } from "./constant";
+import { GLOBAL_MESSAGE } from "./constant";
 
 const app = new Hono();
 
@@ -36,7 +36,7 @@ app
 		}),
 	)
 	.get("/jwt/page", (c) => {
-		return c.text("You are authorized");
+		return c.text(GLOBAL_MESSAGE.AUTHORIZED);
 	});
 app
 	.use(
@@ -47,7 +47,7 @@ app
 		}),
 	)
 	.get("/basic/page", (c) => {
-		return c.text("You are authorized");
+		return c.text(GLOBAL_MESSAGE.AUTHORIZED);
 	});
 
 /**
@@ -63,7 +63,7 @@ app.get("/", (c: Context) => {
  * {@link https://hono.dev/api/hono#not-found}
  */
 app.notFound((c) => {
-	return c.text("Custom 404 Not Found", 404);
+	return c.text(GLOBAL_MESSAGE.NOT_FOUND, 404);
 });
 
 /**
@@ -77,10 +77,10 @@ app.onError((err, c) => {
 	}
 	if (err instanceof Error) {
 		console.error(err);
-		return c.text(MESSAGE.ERROR, 500);
+		return c.text(GLOBAL_MESSAGE.ERROR, 500);
 	}
 	console.error(err);
-	return c.text(MESSAGE.ERROR, 500);
+	return c.text(GLOBAL_MESSAGE.ERROR, 500);
 });
 
 export default app;

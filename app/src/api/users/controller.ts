@@ -2,7 +2,7 @@ import { tbValidator } from "@hono/typebox-validator";
 import { HTTPException } from "hono/http-exception";
 import app from "..";
 import { User } from "../../drizzle/schema";
-import { MESSAGE } from "../constant";
+import { GLOBAL_MESSAGE, USER_MESSAGE } from "../constant";
 import { createUser, findUserById, findUsers } from "./repository";
 import { UserSchema } from "./schema/schema";
 
@@ -21,9 +21,9 @@ app
 		"/user",
 		tbValidator("json", UserSchema, (result, c) => {
 			if (!result.success) {
-				throw new HTTPException(400, { message: MESSAGE.INVALID_REQUEST });
+				throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 			}
 			createUser(result.data satisfies User);
-			return c.text(MESSAGE.USER_CREATED);
+			return c.text(USER_MESSAGE.USER_CREATED);
 		}),
 	);
