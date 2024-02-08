@@ -1,7 +1,7 @@
 import { tbValidator } from "@hono/typebox-validator";
 import { Hono } from "hono";
 import { User } from "./drizzle/schema";
-import { createUser, findUsers } from "./users/repository";
+import { createUser, findUserById, findUsers } from "./users/repository";
 import { UserSchema } from "./users/schema/schema";
 
 const app = new Hono();
@@ -12,6 +12,10 @@ const app = new Hono();
 app
 	.get("/", (c) => {
 		return c.text("Hello Hono!");
+	})
+	.get("/user/:id", (c) => {
+		const id = c.req.param("id");
+		return c.json(findUserById(parseInt(id)));
 	})
 	.get("/users", (c) => {
 		return c.json(findUsers());
