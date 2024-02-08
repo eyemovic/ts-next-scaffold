@@ -1,11 +1,10 @@
 import { tbValidator } from "@hono/typebox-validator";
 import { Hono } from "hono";
-import { User } from "./drizzle/schema";
+import { User } from "../drizzle/schema";
 import { createUser, findUserById, findUsers } from "./users/repository";
 import { UserSchema } from "./users/schema/schema";
 
 const app = new Hono();
-
 /**
  * Get
  */
@@ -20,7 +19,6 @@ app
 	.get("/users", (c) => {
 		return c.json(findUsers());
 	});
-
 /**
  * Post
  */
@@ -34,13 +32,15 @@ app.post(
 		return c.text("User created");
 	}),
 );
-
-// Not Found
+/**
+ * Not Found
+ */
 app.notFound((c) => {
 	return c.text("Custom 404 Not Found", 404);
 });
-
-// Error handling
+/**
+ * Error Handling
+ */
 app.onError((err, c) => {
 	console.error(`${err}`);
 	return c.text("Custom Error Message", 500);
