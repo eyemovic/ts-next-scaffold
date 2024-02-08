@@ -1,7 +1,7 @@
 import { tbValidator } from "@hono/typebox-validator";
 import { HTTPException } from "hono/http-exception";
 import app from "..";
-import { User } from "../../drizzle/schema";
+import { User } from "../../db/types";
 import { GLOBAL_MESSAGE, USER_MESSAGE } from "../constant";
 import { createUser, findUserById, findUsers } from "./repository";
 import { UserSchema } from "./schema/schema";

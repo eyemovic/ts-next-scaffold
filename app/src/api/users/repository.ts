@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
-import { db } from "../../drizzle/db";
-import { $users } from "../../drizzle/schema";
-import { User } from "../../drizzle/schema";
+import { db } from "../../db/db";
+import { $users } from "../../db/schema";
+import { User } from "../../db/types";
 
 /**
  * ユーザーをIDで検索する
