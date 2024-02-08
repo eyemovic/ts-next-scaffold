@@ -1,7 +1,7 @@
 import { db } from "./db";
-import * as schema from "./schema";
+import { $users } from "./schema";
 
-await db.insert(schema.users).values([
+await db.insert($users).values([
 	{
 		firstName: "Taro",
 		givenName: "Yamada",
