@@ -1,8 +1,6 @@
 import { Context, Hono } from "hono";
-import { basicAuth } from "hono/basic-auth";
 import { showRoutes } from "hono/dev";
 import { HTTPException } from "hono/http-exception";
-import { jwt } from "hono/jwt";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import { secureHeaders } from "hono/secure-headers";
