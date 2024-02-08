@@ -3,6 +3,7 @@
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
+    "@hono/typebox-validator": "^0.2.2",
     "drizzle-orm": "^0.29.3",
     "hono": "^3.12.8"
   },

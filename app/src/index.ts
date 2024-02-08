@@ -1,5 +1,8 @@
+import { tbValidator } from "@hono/typebox-validator";
 import { Hono } from "hono";
-import { findUsers } from "./users/repository";
+import { User } from "./drizzle/schema";
+import { createUser, findUsers } from "./users/repository";
+import { UserSchema } from "./users/schema/schema";
 
 const app = new Hono();
 
@@ -13,6 +16,15 @@ app
 	.get("/users", (c) => {
 		return c.json(findUsers());
 	});
+
+/**
+ * Post
+ */
+app.post("/user", tbValidator("json", UserSchema), (c) => {
+	const user = c.req.valid("json") satisfies User;
+	createUser(user);
+	return c.text("User created");
+});
 
 // Not Found
 app.notFound((c) => {

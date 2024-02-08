@@ -4,7 +4,7 @@ export const users = sqliteTable("users", {
 	id: integer("id").primaryKey(),
 	firstName: text("first_name"),
 	givenName: text("given_name"),
-	createdAt: integer("created_at"),
+	createdAt: text("created_at"),
 });
 
 export type User = typeof users.$inferSelect;
