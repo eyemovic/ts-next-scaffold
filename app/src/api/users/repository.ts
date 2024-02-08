@@ -39,4 +39,4 @@ export const UserRepository = {
 	createUsers: async (users: Array<User>): Promise<void> => {
 		return await db.insert($users).values(users);
 	},
-};
+} as const;
