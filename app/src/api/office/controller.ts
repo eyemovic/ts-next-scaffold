@@ -5,7 +5,7 @@ import { HTTPException } from "hono/http-exception";
 import app from "..";
 import { GLOBAL_MESSAGE, USER_MESSAGE } from "../../constant";
 import { Office } from "../../db/types";
-import { JsonResponse } from "../types";
+import { JsonResponse } from "../../types";
 import { OfficeRepository } from "./repository";
 import { officeSchema } from "./schema/schema";
 

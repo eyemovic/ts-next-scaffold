@@ -5,7 +5,7 @@ import { HTTPException } from "hono/http-exception";
 import app from "..";
 import { GLOBAL_MESSAGE, USER_MESSAGE } from "../../constant";
 import { User } from "../../db/types";
-import { JsonResponse } from "../types";
+import { JsonResponse } from "../../types";
 import { UserRepository } from "./repository";
 import { userSchema } from "./schema/schema";
 
