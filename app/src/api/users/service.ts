@@ -5,7 +5,7 @@ import { UserRepository } from "./repository";
  * UserService
  * @description
  * Serviceレイヤーの実装は任意
- * アプリケーションが肥大化した際に、Serviceレイヤーを追加してビジネスロジックを分離する
+ * 処理が肥大化した際に、Serviceレイヤーを追加してビジネスロジックを分離する
  */
 export const UserService = {
 	/**
