@@ -3,7 +3,7 @@ import { Type as T } from "@sinclair/typebox";
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import app from "..";
-import { GLOBAL_MESSAGE, USER_MESSAGE } from "../../constant";
+import { GLOBAL_MESSAGE, OFFICE_MESSAGE } from "../../constant";
 import { OfficeRepository } from "./repository";
 import { officeSchema } from "./schema/schema";
 
@@ -26,7 +26,7 @@ const post = tbValidator("json", officeSchema, (result, c: Context) => {
 		throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 	}
 	OfficeRepository.createOffice(result.data);
-	return c.text(USER_MESSAGE.USER_CREATED);
+	return c.text(OFFICE_MESSAGE.OFFICE_CREATED);
 });
 
 const postMulti = tbValidator("json", T.Array(officeSchema), (result, c: Context) => {
@@ -34,7 +34,7 @@ const postMulti = tbValidator("json", T.Array(officeSchema), (result, c: Context
 		throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 	}
 	OfficeRepository.createOffices(result.data);
-	return c.text(USER_MESSAGE.USER_CREATED);
+	return c.text(OFFICE_MESSAGE.OFFICE_CREATED);
 });
 
 /**

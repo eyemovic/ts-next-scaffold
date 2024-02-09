@@ -5,6 +5,10 @@ export enum GLOBAL_MESSAGE {
 	ERROR = "An error occurred",
 }
 
+export enum OFFICE_MESSAGE {
+	OFFICE_CREATED = "Office created",
+}
+
 export enum USER_MESSAGE {
 	USER_CREATED = "User created",
 }
