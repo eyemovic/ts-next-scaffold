@@ -12,13 +12,22 @@ import { officeSchema } from "./schema/schema";
  * @description オフィス情報に関するコントローラー
  */
 export const OfficeController = {
+	/**
+	 * オフィスをIDで検索する
+	 */
 	getById: async (c: Context) => {
 		const id = parseInt(c.req.param("id"));
 		return c.json(await OfficeRepository.findOfficeById(id));
 	},
+	/**
+	 * オフィスを全件取得する
+	 */
 	getAll: async (c: Context) => {
 		return c.json(await OfficeRepository.findOffices());
 	},
+	/**
+	 * オフィスを作成する
+	 */
 	post: tbValidator("json", officeSchema, (result, c: Context) => {
 		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
@@ -26,6 +35,9 @@ export const OfficeController = {
 		OfficeRepository.createOffice(result.data);
 		return c.text(OFFICE_MESSAGE.OFFICE_CREATED);
 	}),
+	/**
+	 * オフィスを複数作成する
+	 */
 	postMulti: tbValidator("json", T.Array(officeSchema), (result, c: Context) => {
 		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
