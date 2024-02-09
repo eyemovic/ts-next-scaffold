@@ -1,9 +1,10 @@
 {
-	"packages": ["go-task@3.31.0", "bun@1.0.22"],
-	"shell": {
-		"init_hook": ["echo 'Welcome to devbox!' > /dev/null"],
-		"scripts": {
-			"test": ["echo \"Error: no test specified\" && exit 1"]
-		}
-	}
+  "packages": ["bun@1.0.22"],
+  "shell": {
+    "init_hook": ["echo 'Welcome to devbox!' > /dev/null"],
+    "scripts": {
+      "start": "cd app && bun run dev",
+      "test": ["echo \"Error: no test specified\" && exit 1"]
+    }
+  }
 }
