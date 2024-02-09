@@ -42,7 +42,7 @@ const UserController = {
  * Routing
  */
 app
-	.get("/user/:id", await UserController.getById)
+	.get("/user/:id", UserController.getById)
 	.get("/users", UserController.getAll)
 	.post("/user", UserController.post)
 	.post("/users", UserController.postMulti);
