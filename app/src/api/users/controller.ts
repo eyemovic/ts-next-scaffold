@@ -13,6 +13,7 @@ import { userSchema } from "./schema/schema";
 /**
  * UserController
  * @description ユーザー情報に関するコントローラー
+ * オブジェクトリテラル版
  */
 const UserController = {
 	getById: async (c: Context) => {
