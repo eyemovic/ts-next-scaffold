@@ -2,10 +2,11 @@ import { tbValidator } from "@hono/typebox-validator";
 import { Type as T } from "@sinclair/typebox";
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
+import { HandlerResponse } from "hono/types";
 import app from "..";
 import { GLOBAL_MESSAGE, USER_MESSAGE } from "../../constant";
 import { User } from "../../db/types";
-import { JsonResponse } from "../../types";
+import { BaseController } from "../../types";
 import { UserRepository } from "./repository";
 import { userSchema } from "./schema/schema";
 
@@ -14,34 +15,34 @@ import { userSchema } from "./schema/schema";
  * @description ユーザー情報に関するコントローラー
  */
 const UserController = {
-	getUserById: async (c: Context): JsonResponse<User | undefined> => {
+	getById: async (c: Context) => {
 		const id = parseInt(c.req.param("id"));
-		return c.json(await UserRepository.findUserById(id));
+		return c.json(await UserRepository.findUserById(id)) satisfies HandlerResponse<User>;
 	},
-	getUsers: async (c: Context): JsonResponse<Array<User>> => {
+	getAll: async (c: Context) => {
 		return c.json(await UserRepository.findUsers());
 	},
-	postUser: tbValidator("json", userSchema, (result, c: Context): Response => {
+	post: tbValidator("json", userSchema, (result, c: Context) => {
 		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
 		UserRepository.createUser(result.data);
 		return c.text(USER_MESSAGE.USER_CREATED);
 	}),
-	postUsers: tbValidator("json", T.Array(userSchema), (result, c: Context): Response => {
+	postMulti: tbValidator("json", T.Array(userSchema), (result, c: Context) => {
 		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
 		UserRepository.createUsers(result.data);
 		return c.text(USER_MESSAGE.USER_CREATED);
 	}),
-} as const;
+} as const satisfies BaseController;
 
 /**
  * Routing
  */
 app
-	.get("/user/:id", UserController.getUserById)
-	.get("/users", UserController.getUsers)
-	.post("/user", UserController.postUser)
-	.post("/users", UserController.postUsers);
+	.get("/user/:id", await UserController.getById)
+	.get("/users", UserController.getAll)
+	.post("/user", UserController.post)
+	.post("/users", UserController.postMulti);

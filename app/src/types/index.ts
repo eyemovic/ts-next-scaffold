@@ -1,6 +1,11 @@
-import { TypedResponse } from "hono";
+import { Handler, MiddlewareHandler } from "hono/types";
 
 /**
- * コントローラーのレスポンス型
+ * Controllerのテンプレート
  */
-export type JsonResponse<T> = Promise<Response & TypedResponse<T>>;
+export type BaseController = {
+	readonly getById: Handler;
+	readonly getAll: Handler;
+	readonly post: MiddlewareHandler;
+	readonly postMulti: MiddlewareHandler;
+};
