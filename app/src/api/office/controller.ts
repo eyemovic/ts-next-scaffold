@@ -32,7 +32,7 @@ export const OfficeController = {
 		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		OfficeRepository.createOffice(result.data);
+		OfficeRepository.addOffice(result.data);
 		return c.text(OFFICE_MESSAGE.OFFICE_CREATED);
 	}),
 	/**
@@ -42,7 +42,7 @@ export const OfficeController = {
 		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		OfficeRepository.createOffices(result.data);
+		OfficeRepository.addOffices(result.data);
 		return c.text(OFFICE_MESSAGE.OFFICE_CREATED);
 	}),
 } as const satisfies BaseController;

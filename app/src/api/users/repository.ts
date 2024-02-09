@@ -23,13 +23,13 @@ export const UserRepository = {
 	/**
 	 * ユーザーを作成する
 	 */
-	createUser: async (user: User): Promise<void> => {
+	addUser: async (user: User): Promise<void> => {
 		return await db.insert($users).values(user);
 	},
 	/**
 	 * ユーザーを複数作成する
 	 */
-	createUsers: async (users: Array<User>): Promise<void> => {
+	addUsers: async (users: Array<User>): Promise<void> => {
 		return await db.insert($users).values(users);
 	},
 } as const;

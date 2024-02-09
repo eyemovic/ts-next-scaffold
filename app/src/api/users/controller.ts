@@ -32,7 +32,7 @@ export const UserController = {
 		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		UserRepository.createUser(result.data);
+		UserRepository.addUser(result.data);
 		return c.text(USER_MESSAGE.USER_CREATED);
 	}),
 	/**
@@ -42,7 +42,7 @@ export const UserController = {
 		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		UserRepository.createUsers(result.data);
+		UserRepository.addUsers(result.data);
 		return c.text(USER_MESSAGE.USER_CREATED);
 	}),
 } as const satisfies BaseController;

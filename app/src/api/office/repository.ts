@@ -23,13 +23,13 @@ export const OfficeRepository = {
 	/**
 	 * オフィスを作成する
 	 */
-	createOffice: async (office: Office): Promise<void> => {
+	addOffice: async (office: Office): Promise<void> => {
 		return await db.insert($offices).values(office);
 	},
 	/**
 	 * オフィスを複数作成する
 	 */
-	createOffices: async (offices: Array<Office>): Promise<void> => {
+	addOffices: async (offices: Array<Office>): Promise<void> => {
 		return await db.insert($offices).values(offices);
 	},
 } as const;
