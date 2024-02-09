@@ -3,7 +3,6 @@ import { Type as T } from "@sinclair/typebox";
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { HandlerResponse } from "hono/types";
-import app from "..";
 import { GLOBAL_MESSAGE, USER_MESSAGE } from "../../constant";
 import { User } from "../../db/types";
 import { BaseController } from "../../types";
@@ -13,9 +12,8 @@ import { userSchema } from "./schema/schema";
 /**
  * UserController
  * @description ユーザー情報に関するコントローラー
- * オブジェクトリテラル版
  */
-const UserController = {
+export const UserController = {
 	getById: async (c: Context) => {
 		const id = parseInt(c.req.param("id"));
 		return c.json(await UserRepository.findUserById(id)) satisfies HandlerResponse<User>;
@@ -38,12 +36,3 @@ const UserController = {
 		return c.text(USER_MESSAGE.USER_CREATED);
 	}),
 } as const satisfies BaseController;
-
-/**
- * Routing
- */
-app
-	.get("/user/:id", UserController.getById)
-	.get("/users", UserController.getAll)
-	.post("/user", UserController.post)
-	.post("/users", UserController.postMulti);
