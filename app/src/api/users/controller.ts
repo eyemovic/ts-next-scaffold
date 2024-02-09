@@ -2,9 +2,7 @@ import { tbValidator } from "@hono/typebox-validator";
 import { Type as T } from "@sinclair/typebox";
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
-import { HandlerResponse } from "hono/types";
 import { GLOBAL_MESSAGE, USER_MESSAGE } from "../../constant";
-import { User } from "../../db/types";
 import { BaseController } from "../../types";
 import { UserRepository } from "./repository";
 import { userSchema } from "./schema/schema";
@@ -19,7 +17,7 @@ export const UserController = {
 	 */
 	getById: async (c: Context) => {
 		const id = parseInt(c.req.param("id"));
-		return c.json(await UserRepository.findUserById(id)) satisfies HandlerResponse<User>;
+		return c.json(await UserRepository.findUserById(id));
 	},
 	/**
 	 * ユーザーを全件取得する
