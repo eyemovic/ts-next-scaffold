@@ -5,7 +5,7 @@ import { OfficeEntity } from "../../db/types";
 import { BaseRepository } from "../../types";
 import { Office } from "./types";
 
-type OfficeRepository = {} & BaseRepository<Office, OfficeEntity>;
+type OfficeRepository = BaseRepository<Office, OfficeEntity> & {};
 
 /**
  * OfficeRepository

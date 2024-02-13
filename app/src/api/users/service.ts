@@ -2,7 +2,7 @@ import { BaseService } from "../../types";
 import { userRepository } from "./repository";
 import { User } from "./types";
 
-type UserService = {} & BaseService<User>;
+type UserService = BaseService<User> & {};
 
 /**
  * UserService

@@ -5,7 +5,7 @@ import { UserEntity } from "../../db/types";
 import { BaseRepository } from "../../types";
 import { User } from "./types";
 
-export type UserRepository = {} & BaseRepository<User, UserEntity>;
+export type UserRepository = BaseRepository<User, UserEntity> & {};
 
 /**
  * UserRepository
