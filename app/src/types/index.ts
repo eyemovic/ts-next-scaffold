@@ -22,6 +22,9 @@ export type BaseController = {
 	readonly postMulti: MiddlewareHandler;
 };
 
+/**
+ * Serviceのテンプレート
+ */
 export type BaseService<T> = {
 	readonly getById: (id: number) => Promise<T | undefined>;
 	readonly getAll: () => Promise<Array<T>>;
@@ -29,6 +32,9 @@ export type BaseService<T> = {
 	readonly createAll: (data: Array<T>) => void;
 };
 
+/**
+ * Repositoryのテンプレート
+ */
 export type BaseRepository<T, R> = {
 	readonly findById: (id: number) => Promise<R | undefined>;
 	readonly findAll: () => Promise<Array<R>>;
