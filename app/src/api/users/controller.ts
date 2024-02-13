@@ -1,6 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
 import { Context } from "hono";
-import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 import { GLOBAL_MESSAGE, USER_MESSAGE } from "../../constant";
 import { BaseController, BaseResponse } from "../../types";
@@ -45,7 +44,12 @@ export const UserController = {
 	},
 	post: zValidator("json", userSchema, (result, c) => {
 		if (!result.success) {
-			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
+			return c.json({
+				success: false,
+				status: 400,
+				message: GLOBAL_MESSAGE.INVALID_REQUEST,
+				error: result.error,
+			} satisfies BaseResponse<never>);
 		}
 		userService.create(result.data);
 		return c.json({
@@ -56,7 +60,12 @@ export const UserController = {
 	}),
 	postMulti: zValidator("json", z.array(userSchema), (result, c) => {
 		if (!result.success) {
-			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
+			return c.json({
+				success: false,
+				status: 400,
+				message: GLOBAL_MESSAGE.INVALID_REQUEST,
+				error: result.error,
+			} satisfies BaseResponse<never>);
 		}
 		userService.createAll(result.data);
 		return c.json({

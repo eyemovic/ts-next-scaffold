@@ -46,8 +46,8 @@ export const defaultHookHandler = (result: SafeParseReturnType<any, any>, c: Con
 	if (!result.success) {
 		return c.json({
 			success: false,
-			status: 422,
-			message: "Invalid Input",
+			status: 400,
+			message: GLOBAL_MESSAGE.INVALID_REQUEST,
 			error: result.error.errors.map((error: ZodIssue) => ({
 				field: error.path[0],
 				message: error.message,
