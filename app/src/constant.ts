@@ -6,9 +6,15 @@ export enum GLOBAL_MESSAGE {
 }
 
 export enum OFFICE_MESSAGE {
-	OFFICE_CREATED = "Office created",
+	NOT_FOUND = "Office not found",
+	GET_BY_ID = "Office get by id",
+	GET_ALL = "Office get all",
+	CREATED = "Office created",
 }
 
 export enum USER_MESSAGE {
-	USER_CREATED = "User created",
+	NOT_FOUND = "User not found",
+	GET_BY_ID = "User get by id",
+	GET_ALL = "User get all",
+	CREATED = "User created",
 }
