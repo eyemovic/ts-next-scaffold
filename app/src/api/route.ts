@@ -86,7 +86,7 @@ export const baseOpenApiRoute = {
 /**
  * /index のOpenAPI定義
  */
-export const indexRoute = createRoute({
+export const IndexRoute = createRoute({
 	...baseOpenApiRoute,
 	method: "get",
 	path: "/",

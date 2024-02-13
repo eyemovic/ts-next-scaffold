@@ -9,7 +9,7 @@ import { secureHeaders } from "hono/secure-headers";
 import { defaultHookHandler, errorHandler, notFoundHandler, rootHandler } from "../middleware";
 import { OfficeController } from "./office/controller";
 import { OfficeRoute } from "./office/route";
-import { indexRoute } from "./route";
+import { IndexRoute } from "./route";
 import { UserController } from "./users/controller";
 import { UserRoute } from "./users/route";
 
@@ -53,7 +53,7 @@ app
  * /user のルーティング
  */
 app
-	.openapi(indexRoute, rootHandler)
+	.openapi(IndexRoute, rootHandler)
 	.openapi(UserRoute.getById, UserController.getById)
 	.openapi(UserRoute.getAll, UserController.getAll)
 	.openapi(UserRoute.post, UserController.post as Handler) // zValidatorだと型が合わないため無理やりキャスト
