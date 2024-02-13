@@ -4,8 +4,8 @@ import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import { secureHeaders } from "hono/secure-headers";
 import { errorHandler, notFoundHandler } from "../middleware";
-import { OfficeController } from "./office/controller";
-import { UserController } from "./users/controller";
+import { officeController } from "./office/controller";
+import { userController } from "./users/controller";
 
 /**
  * Hono Router
@@ -27,16 +27,16 @@ const app = new Hono()
 	.onError(errorHandler);
 /** /user */
 app
-	.get("/users/:id", UserController.getById)
-	.get("/users", UserController.getAll)
-	.post("/users", UserController.post)
-	.post("/users", UserController.postMulti);
+	.get("/users/:id", userController.getById)
+	.get("/users", userController.getAll)
+	.post("/users", userController.post)
+	.post("/users", userController.postMulti);
 /** /office */
 app
-	.get("/offices/:id", OfficeController.getById)
-	.get("/offices", OfficeController.getAll)
-	.post("/offices", OfficeController.post)
-	.post("/offices", OfficeController.postMulti);
+	.get("/offices/:id", officeController.getById)
+	.get("/offices", officeController.getAll)
+	.post("/offices", officeController.post)
+	.post("/offices", officeController.postMulti);
 
 export default app;
 showRoutes(app);

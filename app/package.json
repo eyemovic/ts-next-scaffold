@@ -4,9 +4,9 @@
     "migrate": "bunx drizzle-kit generate:sqlite --schema=./src/db/schema.ts"
   },
   "dependencies": {
-    "@hono/typebox-validator": "^0.2.2",
     "drizzle-orm": "^0.29.3",
-    "hono": "^4.0.1"
+    "hono": "^4.0.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@tsconfig/bun": "^1.0.3",

@@ -1,35 +1,31 @@
 import { eq } from "drizzle-orm";
 import { db } from "../../db/db";
 import { $users } from "../../db/schema";
-import { User } from "../../db/types";
+import { UserEntity } from "../../db/types";
+import { BaseRepository } from "../../types";
+import { User } from "./schema";
+
+export type UserRepository = {} & BaseRepository<User, UserEntity>;
 
 /**
  * UserRepository
  * @description ユーザー情報に関するリポジトリ
+ * @property findById - ユーザーをIDで検索する
+ * @property findAll - ユーザーを全件取得する
+ * @property add - ユーザーを作成する
+ * @property addMulti - ユーザーを複数作成する
  */
-export const UserRepository = {
-	/**
-	 * ユーザーをIDで検索する
-	 */
-	findUserById: async (id: number): Promise<User | undefined> => {
+export const userRepository = {
+	findById: async (id: number): Promise<UserEntity | undefined> => {
 		return await db.select().from($users).where(eq($users.id, id)).limit(1).get();
 	},
-	/**
-	 * ユーザーを全件取得する
-	 */
-	findUsers: async (): Promise<Array<User>> => {
+	findAll: async (): Promise<Array<UserEntity>> => {
 		return await db.select().from($users);
 	},
-	/**
-	 * ユーザーを作成する
-	 */
-	addUser: async (user: User): Promise<void> => {
+	add: async (user: User): Promise<void> => {
 		return await db.insert($users).values(user);
 	},
-	/**
-	 * ユーザーを複数作成する
-	 */
-	addUsers: async (users: Array<User>): Promise<void> => {
+	addAll: async (users: Array<User>): Promise<void> => {
 		return await db.insert($users).values(users);
 	},
-} as const;
+} as const satisfies UserRepository;

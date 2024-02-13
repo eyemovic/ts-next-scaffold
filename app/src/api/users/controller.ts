@@ -1,48 +1,48 @@
-import { tbValidator } from "@hono/typebox-validator";
-import { Type as T } from "@sinclair/typebox";
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
+import { validator } from "hono/validator";
+import { z } from "zod";
 import { GLOBAL_MESSAGE, USER_MESSAGE } from "../../constant";
 import { BaseController } from "../../types";
-import { UserRepository } from "./repository";
-import { userSchema } from "./schema/schema";
+import { userSchema } from "./schema";
+import { userService } from "./service";
+
+type UserController = BaseController & {};
 
 /**
  * UserController
  * @description ユーザー情報に関するコントローラー
+ * @property getById ユーザーをIDで検索する
+ * @property getAll ユーザーを全件取得する
+ * @property post ユーザーを作成する
+ * @property postMulti ユーザーを複数作成する
  */
-export const UserController = {
-	/**
-	 * ユーザーをIDで検索する
-	 */
+export const userController = {
 	getById: async (c: Context) => {
 		const id = parseInt(c.req.param("id"));
-		return c.json(await UserRepository.findUserById(id));
+		return c.json(await userService.getById(id));
 	},
-	/**
-	 * ユーザーを全件取得する
-	 */
 	getAll: async (c: Context) => {
-		return c.json(await UserRepository.findUsers());
+		return c.json(await userService.getAll());
 	},
-	/**
-	 * ユーザーを作成する
-	 */
-	post: tbValidator("json", userSchema, (result, c: Context) => {
-		if (!result.success) {
+	post: validator("json", (value, c) => {
+		const parsed = userSchema.safeParse(value);
+		if (!parsed.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		UserRepository.addUser(result.data);
-		return c.text(USER_MESSAGE.USER_CREATED);
+		userService.create(parsed.data);
+		return c.json({
+			message: USER_MESSAGE.USER_CREATED,
+		});
 	}),
-	/**
-	 * ユーザーを複数作成する
-	 */
-	postMulti: tbValidator("json", T.Array(userSchema), (result, c: Context) => {
-		if (!result.success) {
+	postMulti: validator("json", (value, c) => {
+		const parsed = z.array(userSchema).safeParse(value);
+		if (!parsed.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		UserRepository.addUsers(result.data);
-		return c.text(USER_MESSAGE.USER_CREATED);
+		userService.createAll(parsed.data);
+		return c.json({
+			message: USER_MESSAGE.USER_CREATED,
+		});
 	}),
-} as const satisfies BaseController;
+} as const satisfies UserController;

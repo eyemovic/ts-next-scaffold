@@ -7,7 +7,7 @@ import { $offices, $users } from "../schema";
  * @property name - オフィス名
  * @property createdAt - 作成日時
  */
-export type Office = InferSelectModel<typeof $offices>;
+export type OfficeEntity = InferSelectModel<typeof $offices>;
 
 /**
  * User
@@ -16,4 +16,4 @@ export type Office = InferSelectModel<typeof $offices>;
  * @property givenName - 姓
  * @property createdAt - 作成日時
  */
-export type User = InferSelectModel<typeof $users>;
+export type UserEntity = InferSelectModel<typeof $users>;

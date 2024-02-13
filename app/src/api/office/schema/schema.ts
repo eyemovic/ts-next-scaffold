@@ -1,7 +1,6 @@
-import { Type as T } from "@sinclair/typebox";
+import { z } from "zod";
 
-export const officeSchema = T.Object({
-	id: T.Number(),
-	name: T.String(),
-	createdAt: T.String(),
+export type Office = z.infer<typeof officeSchema>;
+export const officeSchema = z.object({
+	name: z.string(),
 });
