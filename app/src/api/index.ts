@@ -1,12 +1,17 @@
-import { Hono } from "hono";
+import { swaggerUI } from "@hono/swagger-ui";
+import { OpenAPIHono } from "@hono/zod-openapi";
 import { csrf } from "hono/csrf";
 import { showRoutes } from "hono/dev";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import { secureHeaders } from "hono/secure-headers";
-import { errorHandler, notFoundHandler } from "../middleware";
+import { defaultHookHandler, errorHandler, notFoundHandler, rootHandler } from "../middleware";
 import { officeController } from "./office/controller";
+import { indexRoute } from "./route";
 import { userController } from "./users/controller";
+
+const PUBLIC_OPENAPI_URL = "/doc" as const;
+const PRIVATE_OPENAPI_URL = "/specification" as const;
 
 /**
  * Hono Router
@@ -20,12 +25,29 @@ import { userController } from "./users/controller";
  * {@link https://hono.dev/api/hono#not-found}
  * {@link https://hono.dev/api/hono#error-handling}
  */
-const app = new Hono()
+const app = new OpenAPIHono({
+	defaultHook: defaultHookHandler,
+})
+	.doc(PRIVATE_OPENAPI_URL, {
+		openapi: "3.0.0",
+		info: {
+			title: "Hono API",
+			version: "1.0.0",
+		},
+	})
+	.openapi(indexRoute, rootHandler)
+	.get(
+		PUBLIC_OPENAPI_URL,
+		swaggerUI({
+			url: PRIVATE_OPENAPI_URL,
+		}),
+	);
+/** middleware */
+app
 	.use("*", logger())
 	.use("*", prettyJSON())
 	.use("*", csrf())
 	.use("*", secureHeaders())
-	.get("/", (c) => c.text("Hello Hono!"))
 	.notFound(notFoundHandler)
 	.onError(errorHandler);
 /** /user */

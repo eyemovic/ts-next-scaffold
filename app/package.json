@@ -4,6 +4,8 @@
     "migrate": "bunx drizzle-kit generate:sqlite --schema=./src/db/schema.ts"
   },
   "dependencies": {
+    "@hono/swagger-ui": "^0.2.1",
+    "@hono/zod-openapi": "^0.9.6",
     "drizzle-orm": "^0.29.3",
     "hono": "^4.0.1",
     "zod": "^3.22.4"

@@ -1,6 +1,18 @@
 import { Handler, MiddlewareHandler } from "hono/types";
 
 /**
+ * 基底となるレスポンス
+ */
+export type BaseResponse<T> = {
+	readonly success: boolean;
+	readonly status: number;
+	readonly message: string;
+	readonly data?: T;
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	readonly error?: any;
+};
+
+/**
  * Controllerのテンプレート
  */
 export type BaseController = {
