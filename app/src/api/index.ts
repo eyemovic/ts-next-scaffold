@@ -38,5 +38,8 @@ app
 	.post("/offices", officeController.post)
 	.post("/offices", officeController.postMulti);
 
-export default app;
 showRoutes(app);
+export default {
+	port: 3000,
+	fetch: app.fetch,
+};
