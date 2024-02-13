@@ -3,7 +3,7 @@ import { db } from "../../db/db";
 import { $offices } from "../../db/schema";
 import { OfficeEntity } from "../../db/types";
 import { BaseRepository } from "../../types";
-import { Office } from "./schema/schema";
+import { Office } from "./types";
 
 type OfficeRepository = {} & BaseRepository<Office, OfficeEntity>;
 

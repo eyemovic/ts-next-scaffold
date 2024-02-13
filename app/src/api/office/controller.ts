@@ -5,7 +5,7 @@ import { z } from "zod";
 import { GLOBAL_MESSAGE, OFFICE_MESSAGE } from "../../constant";
 import { BaseController } from "../../types";
 import { officeRepository } from "./repository";
-import { officeSchema } from "./schema/schema";
+import { officeSchema } from "./types";
 
 type OfficeController = BaseController & {};
 

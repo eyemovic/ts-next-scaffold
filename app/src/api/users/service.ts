@@ -1,6 +1,6 @@
 import { BaseService } from "../../types";
 import { userRepository } from "./repository";
-import { User } from "./schema";
+import { User } from "./types";
 
 type UserService = {} & BaseService<User>;
 

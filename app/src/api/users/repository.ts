@@ -3,7 +3,7 @@ import { db } from "../../db/db";
 import { $users } from "../../db/schema";
 import { UserEntity } from "../../db/types";
 import { BaseRepository } from "../../types";
-import { User } from "./schema";
+import { User } from "./types";
 
 export type UserRepository = {} & BaseRepository<User, UserEntity>;
 

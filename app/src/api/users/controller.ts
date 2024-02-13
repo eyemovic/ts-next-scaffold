@@ -4,8 +4,8 @@ import { validator } from "hono/validator";
 import { z } from "zod";
 import { GLOBAL_MESSAGE, USER_MESSAGE } from "../../constant";
 import { BaseController } from "../../types";
-import { userSchema } from "./schema";
 import { userService } from "./service";
+import { userSchema } from "./types";
 
 type UserController = BaseController & {};
 
