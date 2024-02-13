@@ -1,4 +1,3 @@
-import { InferSelectModel } from "drizzle-orm";
 import { $offices, $users } from "../schema";
 
 /**
@@ -8,7 +7,7 @@ import { $offices, $users } from "../schema";
  * @property name - オフィス名
  * @property createdAt - 作成日時
  */
-export type OfficeEntity = InferSelectModel<typeof $offices>;
+export type OfficeEntity = typeof $offices.$inferSelect;
 
 /**
  * User
@@ -18,4 +17,4 @@ export type OfficeEntity = InferSelectModel<typeof $offices>;
  * @property givenName - 姓
  * @property createdAt - 作成日時
  */
-export type UserEntity = InferSelectModel<typeof $users>;
+export type UserEntity = typeof $users.$inferSelect;
