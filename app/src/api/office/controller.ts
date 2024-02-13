@@ -1,3 +1,4 @@
+import { zValidator } from "@hono/zod-validator";
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { validator } from "hono/validator";
@@ -17,7 +18,7 @@ type OfficeController = BaseController & {};
  * @property post オフィスを作成する
  * @property postMulti オフィスを複数作成する
  */
-export const officeController = {
+export const OfficeController = {
 	getById: async (c: Context) => {
 		const id = parseInt(c.req.param("id"));
 		const office = await officeRepository.findById(id);
@@ -43,24 +44,22 @@ export const officeController = {
 			data: await officeRepository.findAll(),
 		} satisfies BaseResponse<Array<Office>>);
 	},
-	post: validator("json", (value, c: Context) => {
-		const parsed = officeSchema.safeParse(value);
-		if (!parsed.success) {
+	post: zValidator("json", officeSchema, (result, c) => {
+		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		officeRepository.add(parsed.data);
+		officeRepository.add(result.data);
 		return c.json({
 			success: true,
 			status: 201,
 			message: OFFICE_MESSAGE.CREATED,
 		} satisfies BaseResponse<never>);
 	}),
-	postMulti: validator("json", (value, c: Context) => {
-		const parsed = z.array(officeSchema).safeParse(value);
-		if (!parsed.success) {
+	postMulti: zValidator("json", z.array(officeSchema), (result, c: Context) => {
+		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		officeRepository.addAll(parsed.data);
+		officeRepository.addAll(result.data);
 		return c.json({
 			success: true,
 			status: 201,

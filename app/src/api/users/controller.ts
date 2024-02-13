@@ -1,6 +1,6 @@
+import { zValidator } from "@hono/zod-validator";
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
-import { validator } from "hono/validator";
 import { z } from "zod";
 import { GLOBAL_MESSAGE, USER_MESSAGE } from "../../constant";
 import { BaseController, BaseResponse } from "../../types";
@@ -17,7 +17,7 @@ type UserController = BaseController & {};
  * @property post ユーザーを作成する
  * @property postMulti ユーザーを複数作成する
  */
-export const userController = {
+export const UserController = {
 	getById: async (c: Context) => {
 		const id = parseInt(c.req.param("id"));
 		const user = await userService.getById(id);
@@ -43,24 +43,22 @@ export const userController = {
 			data: await userService.getAll(),
 		} satisfies BaseResponse<Array<User>>);
 	},
-	post: validator("json", (value, c) => {
-		const parsed = userSchema.safeParse(value);
-		if (!parsed.success) {
+	post: zValidator("json", userSchema, (result, c) => {
+		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		userService.create(parsed.data);
+		userService.create(result.data);
 		return c.json({
 			success: true,
 			status: 201,
 			message: USER_MESSAGE.CREATED,
 		} satisfies BaseResponse<never>);
 	}),
-	postMulti: validator("json", (value, c) => {
-		const parsed = z.array(userSchema).safeParse(value);
-		if (!parsed.success) {
+	postMulti: zValidator("json", z.array(userSchema), (result, c) => {
+		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		userService.createAll(parsed.data);
+		userService.createAll(result.data);
 		return c.json({
 			success: true,
 			status: 201,

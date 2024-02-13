@@ -1,4 +1,5 @@
-import { Handler, MiddlewareHandler } from "hono/types";
+import { RouteConfig } from "@asteasolutions/zod-to-openapi";
+import { Handler } from "hono/types";
 
 /**
  * 基底となるレスポンス
@@ -14,13 +15,23 @@ export type BaseResponse<T> = {
 };
 
 /**
+ * 基底となるルート
+ */
+export type BaseRoute = {
+	readonly getById: RouteConfig;
+	readonly getAll: RouteConfig;
+	readonly post: RouteConfig;
+	readonly postMulti: RouteConfig;
+};
+
+/**
  * Controllerのテンプレート
  */
 export type BaseController = {
 	readonly getById: Handler;
 	readonly getAll: Handler;
-	readonly post: MiddlewareHandler;
-	readonly postMulti: MiddlewareHandler;
+	readonly post: Handler;
+	readonly postMulti: Handler;
 };
 
 /**
