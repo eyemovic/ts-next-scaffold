@@ -2,6 +2,7 @@ import { Handler, MiddlewareHandler } from "hono/types";
 
 /**
  * 基底となるレスポンス
+ * @description アプリケーション全体でレスポンスを統一するための型
  */
 export type BaseResponse<T> = {
 	readonly success: boolean;
