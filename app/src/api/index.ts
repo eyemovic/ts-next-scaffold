@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { csrf } from "hono/csrf";
 import { showRoutes } from "hono/dev";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
@@ -13,6 +14,7 @@ import { userController } from "./users/controller";
  * {@link https://hono.dev}
  * {@link https://hono.dev/middleware/builtin/logger}
  * {@link https://hono.dev/middleware/builtin/pretty-json}
+ * {@link https://hono.dev/middleware/builtin/csrf}
  * {@link https://hono.dev/middleware/builtin/secure-headers}
  * {@link https://hono.dev/api/routing}
  * {@link https://hono.dev/api/hono#not-found}
@@ -21,6 +23,7 @@ import { userController } from "./users/controller";
 const app = new Hono()
 	.use("*", logger())
 	.use("*", prettyJSON())
+	.use("*", csrf())
 	.use("*", secureHeaders())
 	.get("/", (c) => c.text("Hello Hono!"))
 	.notFound(notFoundHandler)
