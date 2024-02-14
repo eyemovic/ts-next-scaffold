@@ -15,7 +15,7 @@ export type UserRepository = BaseRepository<User, UserEntity> & {};
  * @property add - ユーザーを作成する
  * @property addMulti - ユーザーを複数作成する
  */
-export const userRepository = {
+export const UserRepository = {
 	findById: async (id: number): Promise<UserEntity | undefined> => {
 		return await db.select().from($users).where(eq($users.id, id)).limit(1).get();
 	},

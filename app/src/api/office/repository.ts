@@ -15,7 +15,7 @@ type OfficeRepository = BaseRepository<Office, OfficeEntity> & {};
  * @property add - オフィスを作成する
  * @property addAll - オフィスを複数作成する
  */
-export const officeRepository = {
+export const OfficeRepository = {
 	findById: async (id: number): Promise<OfficeEntity | undefined> => {
 		return await db.select().from($offices).where(eq($offices.id, id)).limit(1).get();
 	},

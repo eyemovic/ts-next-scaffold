@@ -1,5 +1,5 @@
 import { BaseService } from "../../types";
-import { userRepository } from "./repository";
+import { UserRepository } from "./repository";
 import { User } from "./types";
 
 type UserService = BaseService<User> & {};
@@ -15,17 +15,17 @@ type UserService = BaseService<User> & {};
  * @property create ユーザーを作成する
  * @property createAll ユーザーを複数作成する
  */
-export const userService = {
+export const UserService = {
 	getById: async (id: number): Promise<User | undefined> => {
-		return (await userRepository.findById(id)) satisfies User | undefined;
+		return (await UserRepository.findById(id)) satisfies User | undefined;
 	},
 	getAll: async (): Promise<Array<User>> => {
-		return (await userRepository.findAll()) satisfies Array<User>;
+		return (await UserRepository.findAll()) satisfies Array<User>;
 	},
 	create: async (user: User): Promise<void> => {
-		return await userRepository.add(user);
+		return await UserRepository.add(user);
 	},
 	createAll: async (users: Array<User>): Promise<void> => {
-		return await userRepository.addAll(users);
+		return await UserRepository.addAll(users);
 	},
 } as const satisfies UserService;

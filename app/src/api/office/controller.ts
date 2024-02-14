@@ -4,7 +4,7 @@ import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 import { GLOBAL_MESSAGE, OFFICE_MESSAGE } from "../../constant";
 import { BaseController, BaseResponse } from "../../types";
-import { officeRepository } from "./repository";
+import { OfficeRepository } from "./repository";
 import { Office, officeSchema } from "./types";
 
 type OfficeController = BaseController & {};
@@ -20,7 +20,7 @@ type OfficeController = BaseController & {};
 export const OfficeController = {
 	getById: async (c: Context) => {
 		const id = parseInt(c.req.param("id"));
-		const office = await officeRepository.findById(id);
+		const office = await OfficeRepository.findById(id);
 		if (!office) {
 			return c.json({
 				success: false,
@@ -40,14 +40,14 @@ export const OfficeController = {
 			success: true,
 			status: 200,
 			message: OFFICE_MESSAGE.GET_ALL,
-			data: await officeRepository.findAll(),
+			data: await OfficeRepository.findAll(),
 		} satisfies BaseResponse<Array<Office>>);
 	},
 	post: zValidator("json", officeSchema, (result, c) => {
 		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		officeRepository.add(result.data);
+		OfficeRepository.add(result.data);
 		return c.json({
 			success: true,
 			status: 201,
@@ -58,7 +58,7 @@ export const OfficeController = {
 		if (!result.success) {
 			throw new HTTPException(400, { message: GLOBAL_MESSAGE.INVALID_REQUEST });
 		}
-		officeRepository.addAll(result.data);
+		OfficeRepository.addAll(result.data);
 		return c.json({
 			success: true,
 			status: 201,
